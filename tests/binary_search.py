@@ -15,25 +15,32 @@ def find_smallest_positive(xs):
     >>> find_smallest_positive([-3, -2, -1]) is None
     True
     '''
-    length = len(xs)
-    middle = length//2
-    if xs[middle]==0:
-        return middle + 1
+    length = len(xs) #list length
+    middle = length//2 #split
+
+    if length == 0:
+        return None
+
     elif xs[middle] < 0:
         if length == 1:
             return None
         else:
-            funct = find_smallest_positive(xs[middle+1:])
-            if funct == None:
+            f1 = find_smallest_positive(xs[middle+1:])
+            if f1 == None:
                 return None
             else:
-                return funct+middle
+                return f1+middle+1
+    elif xs[middle] == 0:
+         return middle + 1
     else:
         if length == 1:
             return 0
         else:
-            return find_smallest_positive(xs[:middle])
-
+            if find_smallest_positive(xs[:middle])==None:
+                return middle
+            else:
+                return find_smallest_positive(xs[:middle])
+    
 
 def count_repeats(xs, x):
     '''
@@ -134,19 +141,19 @@ def argmin(f, lo, hi, epsilon=1e-3):
     >>> argmin(lambda x: (x-5)**2, -20, 0)
     -0.00016935087808430278
     '''
-    left = lo
-    right = hi
+    l = lo
+    r = hi
 
-    def go(left, right):
-        m1 = left + (right - left)/8
-        m2 = right - (right -left)/4
-        if right - left < epsilon:
-            return right
+    def go(l, r):
+        m1 = l + (r - l)/8
+        m2 = r - (r - l)/4
+        if r - l < epsilon:
+            return r
         if f(m1)<f(m2):
-            return go(left, m2)
+            return go(l, m2)
         if f(m1)>f(m2):
-            return go(m1, right)
-    return go(left, right)
+            return go(m1, r)
+    return go(l, r)
     
     
 
