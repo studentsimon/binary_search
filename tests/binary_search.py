@@ -15,17 +15,24 @@ def find_smallest_positive(xs):
     >>> find_smallest_positive([-3, -2, -1]) is None
     True
     '''
-    left = 0
-    right = len(xs)-1
-    while left<=right:
-        mid = (left+right)//2
-        if 1 < xs[mid]:
-            right = mid-1
-        if 1 > xs[mid]:
-            left = mid+1
-        if 1 == xs[mid]:
-            return mid
-    return None 
+    length = len(xs)
+    middle = length//2
+    if xs[middle]==0:
+        return middle + 1
+    elif xs[middle] < 0:
+        if length == 1:
+            return None
+        else:
+            funct = find_smallest_positive(xs[middle+1:])
+            if funct == None:
+                return None
+            else:
+                return funct+middle
+    else:
+        if length == 1:
+            return 0
+        else:
+            return find_smallest_positive(xs[:middle])
 
 
 def count_repeats(xs, x):
@@ -47,7 +54,8 @@ def count_repeats(xs, x):
     >>> count_repeats([1, 2, 3], 4)
     0
     '''
-
+    if len(xs) == 0:
+        return 0
     
 
     x1 = finder(xs, x)
